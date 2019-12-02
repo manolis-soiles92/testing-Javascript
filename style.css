@@ -1,0 +1,8 @@
+h1{
+    color:blue;
+    cursor:pointer;
+}
+
+.weather-widget{
+    border: 3px solid grey;
+}
