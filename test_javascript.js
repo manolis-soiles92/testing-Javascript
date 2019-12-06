@@ -293,7 +293,7 @@ let weatherDiv = document.querySelector("#weather");
 weatherDiv.innerText=weatherResponse;
 
 function getWeather(){     //επιστρέφει ένα promise
-    let control=200;
+    let control=300;
     return new Promise((resolve,reject)=>{         //παίρνει σαν παράμετρο μία συνάρτηση η οποία έχει δύο παραμέτρους(resolve,reject)
         setTimeout(()=>{
             weatherResponse="Βροχή";
@@ -319,15 +319,33 @@ function moreText(){
     weatherDiv.innerText=weatherResponse;
 }
 
+//getWeather()
+//.then(setWeather) //αν όλα έχουν πάει καλά   εμφανίζει πρώτα το παρακαλώ περιμένετε και μετά το Σήμερα έχει λιακάδα
+//.catch((err=>weatherDiv.innerText=err)); //αν υπάρχει πρόβλημα εμφγανίζει το μήνυμα λάθους που έχουμε δώσει στο reject
 getWeather()
-.then(moreText) //αν όλα έχουν πάει καλά   εμφανίζει πρώτα το παρακαλώ περιμένετε και μετά το Σήμερα έχει λιακάδα
-.catch((err=>weatherDiv.innerText=err)); //αν υπάρχει πρόβλημα εμφγανίζει το μήνυμα λάθους που έχουμε δώσει στο reject
- //getWeather(moreText); //Αν ειναι βροχή εμφανίζει το Βροχη, πάρε ομπρέλα
+.then(moreText) //Αν ειναι βροχή εμφανίζει το μηνυμα Βροχη, πάρε ομπρέλα
+.catch(err=>weatherDiv.innerText=err);
 */
+  
 //ajax με fetch
-let firstName= "Manolis";
-let lastName= "Soiles";
-console.log(firstName + " " + lastName);
+const api='888717f5e5805a230ac25d4567aaa086';
+let weatherResponse="Παρακαλώ περιμένετε...";
+let weatherDiv = document.querySelector("#weather");
+weatherDiv.innerText=weatherResponse;
+
+function getWeather(){     //επιστρέφει ένα promise
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=Athens,gr&lang=el&units=metric&appid=${api}`,{method:'GET'})
+    .then(response=>response.json())  //μετατρέπουμε το response σε μορφή json
+    .then(json=>  //φέρε από το response και παρουσίασε τα στοιχείαπου θα σου ζητήσω
+        weatherDiv.innerHTML=`<b>Πρόγνωση:</b> ${json.weather[0].description}, <b>Θερμοκρασία:</b> ${json.main.temp} <sup>o</sup>C, <b>Υγρασία:</b> ${json.main.humidity}% , <b>Πόλη:</b> ${json.name}`)    
+    .then(setWeather())
+    .catch(err=>weatherDiv.innerText=`ERROR: ${err}`);
+}
+
+function setWeather(){
+    weatherDiv.innerText=weatherResponse;
+}
+getWeather();
 
 
 
