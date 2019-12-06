@@ -328,24 +328,36 @@ getWeather()
 */
   
 //ajax με fetch
+
 const api='888717f5e5805a230ac25d4567aaa086';
 let weatherResponse="Παρακαλώ περιμένετε...";
 let weatherDiv = document.querySelector("#weather");
-weatherDiv.innerText=weatherResponse;
+//weatherDiv.innerText=weatherResponse;
+//let choice=document.querySelector('input').value;
+//function test(){
+//    document.querySelector('h3').innerText=document.querySelector('input').value;
+//}
+//document.querySelector('#add').addEventListener('click',test)
+
+
+//console.log(choice);
 
 function getWeather(){     //επιστρέφει ένα promise
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=Athens,gr&lang=el&units=metric&appid=${api}`,{method:'GET'})
+    
+    document.querySelector('#message').innerText=`Ο καιρός σήμερα στη πόλη:  ${document.querySelector('input').value}`;
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${document.querySelector('input').value},gr&lang=el&units=metric&appid=${api}`,{method:'GET'})
     .then(response=>response.json())  //μετατρέπουμε το response σε μορφή json
-    .then(json=>  //φέρε από το response και παρουσίασε τα στοιχείαπου θα σου ζητήσω
-        weatherDiv.innerHTML=`<b>Πρόγνωση:</b> ${json.weather[0].description}, <b>Θερμοκρασία:</b> ${json.main.temp} <sup>o</sup>C, <b>Υγρασία:</b> ${json.main.humidity}% , <b>Πόλη:</b> ${json.name}`)    
-    .then(setWeather())
+    .then(json=>  //φέρε από το response και παρουσίασε τα στοιχεία που θα σου ζητήσω
+        weatherDiv.innerHTML=`<b>Πρόγνωση:</b> ${json.weather[0].description},<br/> <b>Θερμοκρασία:</b> ${json.main.temp} <sup>o</sup>C,<br/> <b>Υγρασία:</b> ${json.main.humidity}%,<br/> <b>Πόλη:</b> ${json.name}`)    
+    //.then(setWeather())    //<br/> newline
     .catch(err=>weatherDiv.innerText=`ERROR: ${err}`);
 }
 
 function setWeather(){
     weatherDiv.innerText=weatherResponse;
 }
-getWeather();
+  document.querySelector('#search').addEventListener('click',getWeather); //χωρίς παρενθέσεις η συνάρτηση
+
 
 
 

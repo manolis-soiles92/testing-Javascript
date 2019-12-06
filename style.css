@@ -1,8 +1,18 @@
 h1{
-    color:blue;
-    cursor:pointer;
+    color: #006400;
+
+    width: max-content;
 }
 
 .weather-widget{
-    border: 3px solid grey;
+   
+    width: 300;
+    border: 3px;
+}
+
+#search{
+    border-color: blue;
+    background-color: darkgrey;
+    cursor: pointer;
+
 }
